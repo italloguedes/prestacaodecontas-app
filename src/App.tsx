@@ -6,10 +6,8 @@ import { generatePDF } from './utils/pdfGenerator';
 import { Loader2, Download, FileCheck } from 'lucide-react';
 
 function App() {
-  const { files, clearFiles } = useFileStore((state) => ({
-    files: state.files,
-    clearFiles: state.clearFiles,
-  }));
+  const files = useFileStore((state) => state.files);
+  const clearFiles = useFileStore((state) => state.clearFiles);
   const [isGenerating, setIsGenerating] = useState(false);
   const [fileName, setFileName] = useState(`prestacao-de-contas-${new Date().toISOString().split('T')[0]}`);
 
