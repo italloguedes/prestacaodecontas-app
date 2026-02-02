@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -16,8 +16,10 @@
     "@types/uuid": "^10.0.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.25",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.556.0",
     "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^5.4.624",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-dropzone": "^14.3.8",

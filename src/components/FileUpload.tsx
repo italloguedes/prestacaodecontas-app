@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { motion } from 'framer-motion';
 import { Upload, FileUp } from 'lucide-react';
 import { useFileStore } from '../store/useFileStore';
-import { cn } from '../lib/utils';
 
 export function FileUpload() {
     const addFiles = useFileStore((state) => state.addFiles);
@@ -20,31 +20,56 @@ export function FileUpload() {
     });
 
     return (
-        <div
+        <motion.div
             {...getRootProps()}
-            className={cn(
-                "relative cursor-pointer rounded-xl border-2 border-dashed border-slate-300 p-10 transition-all hover:border-blue-500 hover:bg-blue-50/50",
-                isDragActive && "border-blue-500 bg-blue-50"
-            )}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className={`
+                relative cursor-pointer rounded-xl border-2 border-dashed p-10 transition-all
+                ${isDragActive
+                    ? 'border-primary bg-primary/10'
+                    : 'border-white/20 hover:border-primary/50 hover:bg-white/5'
+                }
+            `}
         >
             <input {...getInputProps()} />
-            <div className="flex flex-col items-center justify-center gap-4 text-center">
-                <div className="rounded-full bg-blue-100 p-4 text-blue-600">
+
+            {/* Glow effect on drag */}
+            {isDragActive && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20"
+                />
+            )}
+
+            <div className="relative flex flex-col items-center justify-center gap-4 text-center">
+                <motion.div
+                    animate={isDragActive ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] } : {}}
+                    transition={{ duration: 0.5, repeat: isDragActive ? Infinity : 0 }}
+                    className={`
+                        rounded-full p-4 transition-colors
+                        ${isDragActive
+                            ? 'bg-gradient-to-br from-primary to-secondary text-white'
+                            : 'bg-white/10 text-white/60'
+                        }
+                    `}
+                >
                     {isDragActive ? (
-                        <FileUp className="h-8 w-8 animate-bounce" />
+                        <FileUp className="h-8 w-8" />
                     ) : (
                         <Upload className="h-8 w-8" />
                     )}
-                </div>
+                </motion.div>
                 <div>
-                    <p className="text-lg font-medium text-slate-700">
+                    <p className="text-lg font-medium text-white/90">
                         {isDragActive ? "Solte os arquivos aqui" : "Arraste e solte arquivos aqui"}
                     </p>
-                    <p className="text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-white/50">
                         ou clique para selecionar (Imagens e PDF)
                     </p>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }

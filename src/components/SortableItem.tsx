@@ -30,7 +30,11 @@ export function SortableItem({ id, children, className }: SortableItemProps) {
             style={style}
             {...attributes}
             {...listeners}
-            className={cn("touch-none", className, isDragging && "opacity-50")}
+            className={cn(
+                "touch-none cursor-grab active:cursor-grabbing transition-all duration-200",
+                className,
+                isDragging && "opacity-70 scale-105 shadow-glow-lg rotate-2"
+            )}
         >
             {children}
         </div>
